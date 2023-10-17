@@ -23,7 +23,7 @@ const TFTStats = () => {
     }
     else { setEmptyGameName(false); }
     setClicked(true);
-    fetch(`/api/tftStats?gameName=${gameName}`)
+    fetch(`/api/riotApiCall?gameName=${gameName}`)
       .then((response) => response.json())
       .then((data) => {
         setAveragePlacement(data.avgPlacement);

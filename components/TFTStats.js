@@ -44,11 +44,11 @@ const TFTStats = () => {
   };
 
   return (
-    <div className="w-1/2 flex justify-center flex-col">
+    <div className="w-2/5 flex justify-center flex-col">
       <div className="pb-5">
         <h1 className="font-bold text-xl py-5">TFT Stats</h1>
         <input
-          className="shadow appearance-none border rounded w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-4/5 py-2 pl-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           value={gameName}
           onChange={handleGameNameChange}

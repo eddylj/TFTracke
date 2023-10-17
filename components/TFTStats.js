@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Orbit } from "@uiball/loaders";
 import Scores from "./Scores";
 
@@ -10,28 +10,37 @@ const TFTStats = () => {
   const [gameName, setGameName] = useState("");
   const [averagePlacement, setAveragePlacement] = useState(null);
   const [last20, setLast20] = useState(null);
+  const [apiError, setApiError] = useState(false);
+  let fetchStatsRef = useRef();
+
+  useEffect(() => {
+    fetchStatsRef.current.removeAttribute("disabled");
+  }, [apiError]);
 
   const handleGameNameChange = (event) => {
     setGameName(event.target.value);
   };
 
-  const fetchTFTStats = () => {
+  const fetchTFTStats = async () => {
     setAveragePlacement(null);
+    setApiError(false);
     if (gameName.trim() === "") {
       setEmptyGameName(true);
       return;
     }
     else { setEmptyGameName(false); }
+    if (fetchStatsRef.current) fetchStatsRef.current.setAttribute("disabled", "disabled");
     setClicked(true);
-    fetch(`/api/riotApiCall?gameName=${gameName}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setAveragePlacement(data.avgPlacement);
-        setLast20(data.last_20);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    const response = await fetch(`/api/riotApiCall?gameName=${gameName}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    if (data.error) setApiError(true);
+    else {
+      setAveragePlacement(data.avgPlacement);
+      setLast20(data.last_20)
+      fetchStatsRef.current.removeAttribute("disabled");
+    };
   };
 
   return (
@@ -45,19 +54,19 @@ const TFTStats = () => {
           onChange={handleGameNameChange}
           placeholder="Enter in game name"
         />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={fetchTFTStats}>Fetch Stats</button>
+        <button ref={fetchStatsRef} onClick={fetchTFTStats} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Fetch Stats</button>
       </div>
 
       <div>
         {
-          clicked ? (
+          clicked && !emptyGameName && !apiError ? (
             averagePlacement !== null && !isNaN(averagePlacement) ? (
               <>
                 <p>Average Placement in Last {last20.length} Games: {averagePlacement.toFixed(2)}</p>
                 <Scores last20={last20} />
               </>
             ) : (
-              <div>
+              <div className="flex justify-center">
                 <Orbit size={35} color="#231F20" />
               </div>
             )
@@ -65,6 +74,7 @@ const TFTStats = () => {
         }
 
         {emptyGameName && <p className="text-red-600">Game Name cannot be empty</p>}
+        {apiError && <p className="text-red-600">Error fetching stats. Please try again later.</p>}
       </div>
     </div >
   );

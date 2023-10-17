@@ -6,7 +6,7 @@ export const runtime = "edge"; // 'nodejs' is the default
 
 export async function GET(req: NextRequest) {
   try {
-    const api_key = "RGAPI-6507812a-88e1-4e5f-a56e-7fb1a10ead83";
+    const api_key = "RGAPI-960a3086-45b9-4b57-ab10-92e9ca6264ef";
     const game_name = req.nextUrl.searchParams.get("gameName");
     console.log(game_name);
 

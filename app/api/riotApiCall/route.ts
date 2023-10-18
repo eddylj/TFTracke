@@ -8,7 +8,8 @@ export async function GET(req: NextRequest) {
   try {
     const api_key = "RGAPI-b4420c8f-260a-4e92-be31-10be3e85d071";
     const game_name = req.nextUrl.searchParams.get("gameName");
-    console.log(game_name);
+    const game_tag = req.nextUrl.searchParams.get("gameTag");
+    console.log(game_tag);
 
     if (!game_name || game_name.trim() === "") {
       return NextResponse.json(
@@ -17,10 +18,8 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const tag_line = "OCE";
-
     // Get account info
-    const account_url = `https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${game_name}/${tag_line}`;
+    const account_url = `https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${game_name}/${game_tag}`;
     const account_resp = await fetch(account_url, {
       method: "GET",
       headers: { "X-Riot-Token": api_key },

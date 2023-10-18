@@ -2,7 +2,7 @@
 
 const Scores = (props) => {
   const Num = ({ number }) => {
-    let className = "inline-flex items-center justify-center w-4 rounded-md px-3 py-2 text-xs font-medium ring-1 ring-inset ring-gray-500/10 ";
+    let className = "inline-flex items-center justify-center w-4 rounded-md px-3.5 mx-0.5 py-2 text-xs font-medium ring-1 ring-inset ring-gray-500/10 ";
 
     if (number === 1) {
       className += "text-black bg-[#FFD700]";
@@ -25,7 +25,7 @@ const Scores = (props) => {
   }
 
   return (
-    <div className='flex py-3 pl-2 flex-wrap gap-x-0 gap-y-2'>
+    <div className='flex py-3 pl-2 flex-wrap gap-y-2'>
       {props.last20.map((number, index) => (
         <Num key={index} number={number}></Num>
       ))}

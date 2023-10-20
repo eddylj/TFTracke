@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import axios from "axios";
 
 export const runtime = "edge"; // 'nodejs' is the default
 
 export async function GET(req: NextRequest) {
   try {
-    const api_key = "RGAPI-b4420c8f-260a-4e92-be31-10be3e85d071";
+    const api_key = process.env.RIOT_API_KEY;
+    if (!api_key) {
+      throw new Error("No API key found");
+    }
     const game_name = req.nextUrl.searchParams.get("gameName");
     const game_tag = req.nextUrl.searchParams.get("gameTag");
     console.log(game_tag);

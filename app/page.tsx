@@ -2,6 +2,8 @@ import React from "react";
 import TFTStats from "../components/TFTStats.js";
 import { Metadata } from "next";
 
+require("dotenv").config();
+
 export const metadata: Metadata = {
   title: "TFTracker",
   description: "TFT Tracker",

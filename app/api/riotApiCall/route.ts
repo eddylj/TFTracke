@@ -66,7 +66,10 @@ export async function GET(req: NextRequest) {
     });
     const tft_match_data = await tft_match_resp.json();
     if (!tft_match_resp.ok)
-      throw new RiotApiError(account_data.status.message, account_resp.status);
+      throw new RiotApiError(
+        tft_match_data.status.message,
+        tft_match_resp.status
+      );
 
     const matches = tft_match_data;
     const match_url = "https://sea.api.riotgames.com/tft/match/v1/matches";
@@ -80,11 +83,10 @@ export async function GET(req: NextRequest) {
       });
 
       const match_data = await match_resp.json();
-      if (!match_resp.ok)
-        throw new RiotApiError(
-          account_data.status.message,
-          account_resp.status
-        );
+      if (!match_resp.ok) {
+        continue;
+        throw new RiotApiError(match_data.status.message, match_resp.status);
+      }
 
       for (const player of match_data.info.participants) {
         if (player.puuid === puuid) {

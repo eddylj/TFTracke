@@ -92,16 +92,18 @@ const TFTStats = () => {
       <div>
         {
           clicked && !emptyGameName && !apiError ? (
-            averagePlacement !== null && !isNaN(averagePlacement) ? (
-              <div className="flex flex-col items-center">
-                <p>Average placement in last {last20.length} games: {averagePlacement.toFixed(2)}</p>
-                <Scores last20={last20} />
-              </div>
-            ) : (
-              <div className="flex justify-center">
-                <Orbit size={35} color="#231F20" />
-              </div>
-            )
+            averagePlacement !== null && !isNaN(averagePlacement) ?
+              (last20.length !== 0 ? (
+                <div className="flex flex-col items-center">
+                  <p>Average placement in last {last20.length} games: {averagePlacement.toFixed(2)}</p>
+                  <Scores last20={last20} />
+                </div>
+              ) : <p>This account has no TFT matches on record</p>)
+              : (
+                <div className="flex justify-center">
+                  <Orbit size={35} color="#231F20" />
+                </div>
+              )
           ) : null
         }
         {emptyGameName && <p className="text-red-600">Game {gameName ? 'tag' : 'name'} cannot be empty</p>}

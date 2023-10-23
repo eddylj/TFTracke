@@ -12,6 +12,7 @@ const TFTStats = () => {
   const [averagePlacement, setAveragePlacement] = useState(null);
   const [last20, setLast20] = useState(null);
   const [apiError, setApiError] = useState(false);
+  const [apiErrorMessage, setApiErrorMessage] = useState("");
   let fetchStatsRef = useRef();
 
   useEffect(() => {
@@ -45,7 +46,10 @@ const TFTStats = () => {
       method: "GET",
     });
     const data = await response.json();
-    if (data.error) setApiError(true);
+    if (data.error) {
+      setApiError(true);
+      setApiErrorMessage(data.error);
+    }
     else {
       setAveragePlacement(data.avgPlacement);
       setLast20(data.last_20)
@@ -101,7 +105,7 @@ const TFTStats = () => {
           ) : null
         }
         {emptyGameName && <p className="text-red-600">Game {gameName ? 'tag' : 'name'} cannot be empty</p>}
-        {apiError && <p className="text-red-600">Error fetching stats. Please try again later.</p>}
+        {apiError && <p className="text-red-600">{apiErrorMessage}</p>}
       </div>
     </div >
   );

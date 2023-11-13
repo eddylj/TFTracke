@@ -1,6 +1,7 @@
 import React from "react";
 import TFTStats from "../components/TFTStats.js";
 import { Metadata } from "next";
+import { ModeToggle } from "@/components/ModeToggle";
 
 require("dotenv").config();
 
@@ -14,20 +15,11 @@ export const metadata: Metadata = {
 };
 
 const Home = () => {
-  // if (
-  //   localStorage.theme === "dark" ||
-  //   (!("theme" in localStorage) &&
-  //     window.matchMedia("(prefers-color-scheme: dark)").matches)
-  // ) {
-  //   document.documentElement.classList.add("dark");
-  // } else {
-  //   document.documentElement.classList.remove("dark");
-  // }
-
   return (
     <div>
-      <div className="flex flex-wrap justify-center py-10 ">
+      <div className="flex flex-wrap justify-center py-10">
         <TFTStats />
+        <ModeToggle />
       </div>
     </div>
   );

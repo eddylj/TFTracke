@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Orbit } from "@uiball/loaders";
 import Scores from "./Scores";
+import { Input } from "@/components/ui/input"
 
 const TFTStats = () => {
   const [clicked, setClicked] = useState(false);
@@ -65,22 +66,18 @@ const TFTStats = () => {
           <div className="flex sm:flex-row flex-col pb-5 w-full items-center">
             <div className="flex flex-row w-full pb-2 sm:pb-0">
               <div className="flex-1">
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 pl-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
-                  value={gameName}
+                <Input type="text" value={gameName}
                   onChange={handleGameNameChange}
                   placeholder="Name"
-                />
+                  className="w-full py-2 pl-3" />
               </div>
               <div className="flex flex-row flex-initial w-28">
                 <span className="m-2">#</span>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-2 mr-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
+                <Input type="text"
                   value={gameTag}
                   onChange={handleGameTagChange}
-                  placeholder="Tag" />
+                  placeholder="Tag"
+                  className="w-full py-2 px-2 mr-2" />
               </div>
             </div>
             <div className="w-40">
@@ -88,7 +85,7 @@ const TFTStats = () => {
             </div>
           </div>
         </form>
-      </div>
+      </div >
       <div>
         {
           clicked && !emptyGameName && !apiError ? (

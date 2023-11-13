@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Orbit } from "@uiball/loaders";
 import Scores from "./Scores";
 import { Input } from "@/components/ui/input"
+import { useTheme } from "next-themes";
 
 const TFTStats = () => {
   const [clicked, setClicked] = useState(false);
@@ -15,6 +16,13 @@ const TFTStats = () => {
   const [apiError, setApiError] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState("");
   let fetchStatsRef = useRef();
+
+  const { theme } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme])
 
   useEffect(() => {
     fetchStatsRef.current.removeAttribute("disabled");
@@ -98,7 +106,7 @@ const TFTStats = () => {
               ) : <p>This account has no TFT matches on record</p>)
               : (
                 <div className="flex justify-center">
-                  <Orbit size={35} color="#231F20" />
+                  <Orbit size={35} color={isDarkMode ? "white" : "#231F20"} />
                 </div>
               )
           ) : null
